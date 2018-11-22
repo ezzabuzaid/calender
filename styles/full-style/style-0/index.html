@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="./normalize.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>datepicker</title>
+</head>
+
+<body>
+    <div class="p-lg-4">
+        <div class="wrapper">
+            <div class="row m-0">
+                <div class="col-lg-8 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4 p-0 bg-m box-1 d-sm-block d-none">
+                            <div class="text-white">
+                                <div class="p-2 py-3 active-hover">
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        <div id="left-year" class="pointer">
+                                            <img src="./icons/ic_keyboard_arrow_left_white_36px.svg" alt="left">
+                                        </div>
+                                        <div>
+                                            <h2 id="year"></h2>
+                                        </div>
+                                        <div id="right-year" class="pointer">
+                                            <img src="./icons/ic_keyboard_arrow_right_white_36px.svg" alt="right">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul id="n-month" class="list-group"></ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-8 col-12 p-0 box-2">
+                            <div class="text-right">
+                                <a class="btn bg-m rounded-0 active-hover icon-picker-hover">
+                                    <img src="./icons/ic_add_white_48px.svg" alt="Add">
+                                </a>
+                            </div>
+                            <div class="py-lg-4 custom-height">
+                                <div class="text-center">
+                                    <h2 id="c-month" class="text-uppercase pointer"></h2>
+                                </div>
+                                <div id="picker" class="d-flex text-center justify-content-center">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-0 bg-white box-3 d-lg-block d-none">
+                    <div class="text-right">
+                        <a class="btn bg-m rounded-0 active-hover icon-picker">
+                            <img src="./icons/ic_chevron_right_white_48px.svg" alt="Add">
+                        </a>
+                    </div>
+                    <div class="pl-5 pr-0 py-lg-3 py-sm-1 custom-left-border">
+                        <div class="pr-0 py-3 pl-5">
+                            <div id="task" class="d-flex flex-column">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal">
+
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
