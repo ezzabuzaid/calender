@@ -1,0 +1,22 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es2017",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": false,
+        "strictNullChecks": false,
+        "alwaysStrict": true,
+        "strict": true,
+        "sourceMap": true,
+        "baseUrl": "./public/",
+        "outDir": "./dist"
+    },
+    "include": [
+        "public/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}

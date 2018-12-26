@@ -1,26 +1,6 @@
 import { PickerStyling } from './theming';
 'use strict';
-const $ = el => {
-    const one = document.querySelector(el);
-    const many = document.querySelectorAll(el);
-    if (many.length < 2) return one;
-    return many;
-};
 
-const MONTH_NAMES = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-];
 
 class DesktopView extends PickerStyling {
 
@@ -29,7 +9,7 @@ class DesktopView extends PickerStyling {
     }
 
     MiddleColumn() {
-        $('#middle-column').classList = "col-lg-8 col-sm-8 col-12  pr-0 box-2 bg-white";
+        element('#middle-column').classList = "col-lg-8 col-sm-8 col-12  pr-0 box-2 bg-white";
         const OUTPUT = `
         <div class="py-md-4">
             <div>
@@ -50,12 +30,12 @@ class DesktopView extends PickerStyling {
                 </div>
             </div>
         </div>`
-        this.html($('#middle-column'), OUTPUT);
+        this.html(element('#middle-column'), OUTPUT);
         return this;
     }
 
     LeftColumn() {
-        $('#left-column').classList = "col-lg-3 col-md-3 col-sm-4 p-0 m-bg box-1 d-sm-block";
+        element('#left-column').classList = "col-lg-3 col-md-3 col-sm-4 p-0 m-bg box-1 d-sm-block";
         const OUTPUT = `
         <div class='text-white'>
         <div class='p-2 py-3 active-hover'>
@@ -73,7 +53,7 @@ class DesktopView extends PickerStyling {
         </div>
         <ul id='n-month' class='list-group'></ul>
         </div>`;
-        this.html($('#left-column'), OUTPUT);
+        this.html(element('#left-column'), OUTPUT);
         return
     }
 
@@ -122,115 +102,6 @@ DateList.date = {
     month: new Date().getMonth()
 };
 
-class Picker extends PickerStyling {
-
-    constructor(
-        month = new Date().getMonth(),
-        year = new Date().getFullYear(),
-        day = new Date().getDate()
-    ) {
-        super();
-        this.date = new Date(Number(year), Number(month), Number(day));
-        this.date = {
-            day: this.date.getDate(),
-            month,
-            year: this.date.getFullYear(),
-            iso: this.date.toISOString(),
-            local: this.date.toLocaleDateString()
-        };
-        this.days = {
-            Sun: [],
-            Mon: [],
-            Tue: [],
-            Wed: [],
-            Thu: [],
-            Fri: [],
-            Sat: []
-        };
-        this.properties = Object.keys(this.days);
-        this.InitTime();
-        this.InitTab();
-    }
-
-    InitTime() {
-        const {
-            year,
-            month,
-            day
-        } = this.date;
-        const P = this.properties;
-        for (const i of P) this.days[i] = [];
-        const date = new Date(year, month + 1, 0).getDate();
-        for (let i = 1; i <= date; i++) {
-            const testdate = new Date(year, month, i);
-            const day = testdate.toDateString().split(' ')[0];
-            const j = P.indexOf(day);
-            this.days[P[j]].push(i);
-        }
-    }
-
-    InitTab() {
-        const P = this.properties;
-        P.forEach((el, ind) => {
-            const _ = this.days;
-            if (_[el].some(ele => ele === 1)) {
-                for (let i = 0; i < ind; i++) {
-                    _[P[i]].splice(0, 0, ' ');
-                }
-            }
-        });
-        for (const i of P) {
-            const _ = this.days[i];
-            if (_.length === 4) {
-                if (!_.some(j => j === 0)) {
-                    _.splice(4, 0, ' ');
-                }
-            }
-            if (_.length === 6) {
-                var index = P.indexOf(i);
-            }
-        }
-        for (let j = index + 1; j < P.length; j++) {
-            this.days[P[j]].splice(6, 0, ' ');
-        }
-    }
-
-    InitView() {
-        const P = this.properties;
-        const D = this.days;
-        let output = '';
-        let parg = '';
-        let h5 = '';
-        for (let i of P) {
-            for (let j in D[i])
-                if (j !== 'undefined') {
-                    // This if statment just for styling, replace it else code only
-                    let day = D[i][j];
-                    const n = Math.round(Math.random() * 500);
-                    if (n % 2 && day != ' ') {
-                        if (D[i][j] < 10) day = `0${D[i][j]}`;
-                        parg += `<p onclick='getDate(this.innerText)' style='background: rgba(${n},${Math.round(n / 3)},${Math.round(n / 4)},1);' class='text-white font-weight-bold rounded-circle pointer'>${day}</p>`;
-                    } else
-                        parg += `<p onclick='getDate(this.innerText)'>${day}</p>`;
-                }
-            if (window.outerWidth > 768) {
-                h5 = `<h5>${i}</h5>`
-            } else {
-                h5 = `<h5>${i.split('').slice(0, 2).join('')}</h5>`
-            }
-            output += `
-                    <div class='d-flex flex-column p-1 m-1 p-sm-2 m-xl-1 animate day-box'>
-                        ${h5}
-                        ${parg}
-                    </div>`;
-            parg = '';
-            h5 = '';
-        }
-        return output;
-    }
-
-}
-
 (function Init() {
     const DATE_LIST = new DateList();
     const STYLE = new PickerStyling();
@@ -238,40 +109,40 @@ class Picker extends PickerStyling {
     const PICKER = new Picker();
     if (window.outerWidth > 767) {
         // Desktop View
-        $('#desktop-view').style.display = 'block !important';
-        $('#mobile-view').style.display = 'none';
+        element('#desktop-view').style.display = 'block !important';
+        element('#mobile-view').style.display = 'none';
 
         new DesktopView()
             .MiddleColumn()
             .LeftColumn();
 
         STYLE
-            .html($('#picker'), PICKER.InitView())
-            .html($('ul#n-month'), DATE_LIST.InitMonthList())
-            .text($('#c-month'), MONTH_NAMES[DATE.getMonth()])
-            .html($('#year'), DATE.getFullYear());
+            .html(element('#picker'), PICKER.InitView())
+            .html(element('ul#n-month'), DATE_LIST.InitMonthList())
+            .text(element('#c-month'), MONTH_NAMES[DATE.getMonth()])
+            .html(element('#year'), DATE.getFullYear());
         monthListSetter();
-        $('ul#n-month li')[DATE.getMonth()].classList.add('active-picker'); // set the current month
+        element('ul#n-month li')[DATE.getMonth()].classList.add('active-picker'); // set the current month
     } else {
         // // Mobile View
-        $('#desktop-view').style.display = 'none';
-        $('#mobile-view').style.display = 'block';
+        element('#desktop-view').style.display = 'none';
+        element('#mobile-view').style.display = 'block';
 
         new MobileView()
             .Picker()
             .Header();
 
         STYLE
-            .html($('#picker'), PICKER.InitView())
-            .text($('#year'), DATE.getFullYear())
-            .text($('#day-mobile'), DATE.getDate())
-            .text($('#month-mobile'), MONTH_NAMES[DATE.getMonth()])
-            .text($('#c-month'), MONTH_NAMES[DATE.getMonth()]);
+            .html(element('#picker'), PICKER.InitView())
+            .text(element('#year'), DATE.getFullYear())
+            .text(element('#day-mobile'), DATE.getDate())
+            .text(element('#month-mobile'), MONTH_NAMES[DATE.getMonth()])
+            .text(element('#c-month'), MONTH_NAMES[DATE.getMonth()]);
     }
 })();
 
 function monthListSetter() {
-    const monthElement = Array.from($('#n-month li'));
+    const monthElement = Array.from(element('#n-month li'));
     for (const i in monthElement) {
         monthElement[i].addEventListener('click', () => {
             DateList.date.month = Number(i);
@@ -283,8 +154,8 @@ function monthListSetter() {
             const style = new PickerStyling();
             const element = monthElement[i].firstElementChild.firstElementChild;
             style
-                .text($('#c-month'), element.innerText.trim())
-                .html($('#picker'), setPicker.InitView())
+                .text(element('#c-month'), element.innerText.trim())
+                .html(element('#picker'), setPicker.InitView())
                 .activeStyle(monthElement, i, 'active-picker');
         });
     }
@@ -308,8 +179,8 @@ function setYear(year) {
     const setPicker = new Picker(DATE.getMonth(), DATE.getFullYear());
     const style = new PickerStyling();
     style
-        .html($('#picker'), setPicker.InitView())
-        .text($('#year'), DATE.getFullYear());
+        .html(element('#picker'), setPicker.InitView())
+        .text(element('#year'), DATE.getFullYear());
 }
 
 function setMonth(month) {
@@ -328,24 +199,24 @@ function setMonth(month) {
     const setPicker = new Picker(date.getMonth(), date.getFullYear());
     const style = new PickerStyling();
     style
-        .html($('#picker'), setPicker.InitView())
-        .text($('#month-mobile'), MONTH_NAMES[DateList.date.month])
-        .text($('#c-month'), MONTH_NAMES[DateList.date.month]);
+        .html(element('#picker'), setPicker.InitView())
+        .text(element('#month-mobile'), MONTH_NAMES[DateList.date.month])
+        .text(element('#c-month'), MONTH_NAMES[DateList.date.month]);
 }
 
-$('#c-month').addEventListener('click', () => {
+element('#c-month').addEventListener('click', () => {
     const { month, year } = DateList.date;
     const style = new PickerStyling();
     const dateList = new DateList()
     style
-        .html($('#picker'), dateList.InitMonthGrid())
+        .html(element('#picker'), dateList.InitMonthGrid())
         .activeStyle(
-            $('#l-month .active-picker-hover'),
+            element('#l-month .active-picker-hover'),
             DateList.date.month,
             'active-picker'
         );
     return (function () {
-        const monthElement = Array.from($('#l-month .active-picker-hover'));
+        const monthElement = Array.from(element('#l-month .active-picker-hover'));
         for (const i in monthElement) {
             monthElement[i].addEventListener('click', () => {
                 DateList.date.month = Number(i);
@@ -354,29 +225,22 @@ $('#c-month').addEventListener('click', () => {
                 const style = new PickerStyling();
                 const element = monthElement[i].firstElementChild.firstElementChild;
                 style
-                    .html($('#picker'), setPicker.InitView())
-                    .text($('#c-month'), element.innerText.trim());
+                    .html(element('#picker'), setPicker.InitView())
+                    .text(element('#c-month'), element.innerText.trim());
                 if (window.outerWidth > 767) {
-                    style.activeStyle(Array.from($('#n-month li')), i, 'active-picker');
+                    style.activeStyle(Array.from(element('#n-month li')), i, 'active-picker');
                 } else {
-                    style.text($('#month-mobile'), MONTH_NAMES[month]);
+                    style.text(element('#month-mobile'), MONTH_NAMES[month]);
                 }
             });
         }
     }())
 });
 
-function mobileTagDate(date = new Date()) {
-    date = date.toDateString().split(' ');
-    date.splice(date.length - 1);
-    date[0] = `${date[0]},`;
-    return date.join(' ');
-}
-
 function styleOne(view, style) {
     view.LeftColumn();
-    style.html($('#picker'), PICKER.InitView())
-        .html($('ul#n-month'), DATE_LIST.InitMonthList())
-        .text($('#c-month'), MONTH_NAMES[this.date.month])
-        .html($('#year'), this.date.year);
+    style.html(element('#picker'), PICKER.InitView())
+        .html(element('ul#n-month'), DATE_LIST.InitMonthList())
+        .text(element('#c-month'), MONTH_NAMES[this.date.month])
+        .html(element('#year'), this.date.year);
 }
